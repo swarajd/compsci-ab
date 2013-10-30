@@ -30,14 +30,14 @@ Demonstrates many ways to reverse a list made of ListNodes.
          System.out.print("original: \t\t");
          ListLab1.print(head);
       
-      //System.out.print("reverse with 2 pointers:");
-      //head = reverse(null, head);
-      //ListLab1.print(head);
-          	
+         System.out.print("reverse with 2 pointers:");
+         head = reverse(null, head);
+         ListLab1.print(head);
+		
          System.out.print("iterative reverse:\t");
          head = reverseIterate(head);
          ListLab1.print(head);
-      	         
+		 
          System.out.print("reverse in place \t");
          head = reverseInPlace(head);
          ListLab1.print(head);
@@ -93,22 +93,31 @@ Demonstrates many ways to reverse a list made of ListNodes.
    the list in place.   The two local pointers are called
    prev and next.
    ********************************************************/
-      public static ListNode reverseInPlace(ListNode head)
-      {
-      	ListNode prev = head;
-         ListNode next = head;
-         while (head.getNext() != null)
-         {
-         prev = next;
-         next = head.getNext();
-  			//flip them around
-         }      
-         if (head == null)
-            return null;
-      
-         prev = reverse(prev,head);
-         return prev;
-      }
+	public static ListNode reverseInPlace(ListNode head)
+	{
+		if (head == null)
+			return null;
+		if (head.getNext() == null)
+			return head;
+			
+		ListNode prev = head.getNext();
+		ListNode next = prev.getNext();
+		prev.setNext(head);
+		head.setNext(null);
+		if (next == null)
+			return prev;
+		//ListNode cur = next1;
+		//ListNode prev = prev1;
+		while (next != null)
+		{
+			ListNode tmp = next.getNext();
+			next.setNext(prev);
+			prev = next;
+			next = tmp;
+		}
+		head = prev;
+		return head;
+	}
    
    /**************************************************
    This method uses two pointers as arguments to reverse 
@@ -116,11 +125,17 @@ Demonstrates many ways to reverse a list made of ListNodes.
    *********************************************************/
       public static ListNode reverse(ListNode prev, ListNode head)
       {
-         if (head != null) 
-         {
-            prev = reverse(prev, head.getNext());
-         }
-         return head;
+         if (head == null)
+			return null;
+		 if (head.getNext() == null)
+		 {
+			head.setNext(prev);
+			return head;
+		 }
+		 ListNode r = reverse(head, head.getNext());
+		 head.setNext(prev);
+		 return r;
+		 
       } 
    /**********************************************
    Each time, do pointerToLast() and nextToLast(), and link (append())
@@ -128,7 +143,9 @@ Demonstrates many ways to reverse a list made of ListNodes.
    ********************************************************/
       public static ListNode reverseLL(ListNode head)
       {
-         return null;
+		  ListNode nw = pointerToLast(head);
+		  nw.setNext(nextToLast(head));
+		  nextToLast(head).setNext(null);
       }
       private static ListNode pointerToLast(ListNode head)
       {
