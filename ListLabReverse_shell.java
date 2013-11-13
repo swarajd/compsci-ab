@@ -46,9 +46,9 @@ Demonstrates many ways to reverse a list made of ListNodes.
          head = reverseLL(head);
          ListLab1.print(head);
       
-      //          System.out.print("Mind Bender reverse\t");
-      //          head = mindBender(head);
-      //          ListLab1.print(head);
+         System.out.print("Mind Bender reverse\t");
+         head = mindBender(head);
+         ListLab1.print(head);
       }
    /*********************************************
    These two methods don't reverse the list.  They only print out
@@ -143,9 +143,14 @@ Demonstrates many ways to reverse a list made of ListNodes.
    ********************************************************/
       public static ListNode reverseLL(ListNode head)
       {
-		  ListNode nw = pointerToLast(head);
-		  nw.setNext(nextToLast(head));
+		  if (head == null || head.getNext() == null)
+		  {
+			  return head;
+		  }
+		  ListNode rev = pointerToLast(head);
 		  nextToLast(head).setNext(null);
+		  append(rev,reverseLL(head));
+		  return rev;
       }
       private static ListNode pointerToLast(ListNode head)
       {
@@ -184,16 +189,26 @@ Demonstrates many ways to reverse a list made of ListNodes.
    local pointer. Start with pointerToLast(). The helper method
    is recursive.
    ********************************************************/
-   //        public static ListNode mindBender(ListNode head)
-   //       {
-   //          ListNode temp = pointerToLast(head);
-   //          mindBenderHelper(head);
-   //          head.setNext(null);
-   //          return temp;
-   //       }
-   //        public static void mindBenderHelper(ListNode head)
-   //       {
-   //   
-   //       }
+           public static ListNode mindBender(ListNode head)
+          {
+			  ListNode temp = pointerToLast(head);
+			  mindBenderHelper(head);
+			  head.setNext(null);
+			  return temp;
+          }
+           public static void mindBenderHelper(ListNode head)
+          {
+			  if (head == null || head.getNext() == null)
+			  {
+			      return;
+			  }
+			  else
+			  {
+				  mindBenderHelper(head.getNext());
+				  ListNode tmp = head.getNext();
+				  head.setNext(null);
+				  tmp.setNext(head);
+			  }
+          }
    
    }
