@@ -12,42 +12,55 @@ public class LList {
       return rear;
    }
    public void printWhile() {
+		if (front == null && rear == null) {
+			System.out.println("[]");
+			return;
+		}
+		System.out.print("[");
       ListNode temp = front;
       while (!(temp == null)) {
-         System.out.println(temp.getValue());
+         System.out.print(temp.getValue() + ", ");
          temp = temp.getNext();
       }
+		System.out.println("]");
    }
    public void printFor() {
+		System.out.print("[");
       for (ListNode temp = front; !(temp == null); temp = temp.getNext()) {
-         System.out.println(temp.getValue());
+         System.out.print(temp.getValue() + ", ");
       }
+		System.out.println("]");
    }
    public void addFirst(Object obj) {
-      if (front == null) {
-         front = new ListNode(obj, rear);
-      } 
-      else {
-         ListNode newfirst = new ListNode(obj, front);
-			ListNode temp = front;
-         front = newfirst;
+		if (front == null) {
+			ListNode temp = new ListNode(obj, null);
+			front = temp;
 			if (rear == null) {
 				rear = temp;
 			}
-      }
+		} else {
+			ListNode temp = new ListNode(obj, front);
+			front = temp;
+			if (rear == null) {
+				rear = temp;
+			}
+		}
    }
    public void addLast(Object obj) {
-      if (rear == null) {
-         rear = new ListNode(obj, null);
-      } 
-      else {
-         ListNode newlast = new ListNode(obj, null);
-			ListNode temp = rear;
-         rear.setNext(newlast);
-         rear = newlast;
+		if (rear == null) {
+			ListNode temp = new ListNode(obj, null);
+			rear = temp;
 			if (front == null) {
 				front = temp;
 			}
-      }
+		} else {
+			ListNode rear_ = new ListNode(obj, null);
+			ListNode temp = rear;
+			rear.setNext(rear_);
+			rear = rear.getNext();
+			if (front == null) {
+				front = temp;
+			}
+		}
    }
 }
