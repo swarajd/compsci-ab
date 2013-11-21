@@ -23,7 +23,6 @@ public class LListTester {
       }
       someList.printWhile();
       System.out.println();
-      someList.printFor();
-             
+      someList.printFor();       
    }
 }
