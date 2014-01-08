@@ -194,8 +194,8 @@ Demonstrates many ways to reverse a list made of ListNodes.
    ********************************************************/
       public static ListNode mindBender(ListNode head)
       {
-			if (head == null) {
-				return null;
+			if (head == null || head.getNext() == null) {
+				return head;
 			}
          ListNode temp = pointerToLast(head);
          mindBenderHelper(head);
