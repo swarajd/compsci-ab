@@ -4,4 +4,4 @@
 *.png
 others/
 bored/
-
+.~lock.*
